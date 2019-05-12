@@ -1,0 +1,166 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+    // }
+	".gitignore for playbook": {
+		"prefix": "ignoreplaybook",
+		"body": [
+            "roles/*/",
+            "!roles/requirements.yml",
+            "__pycache__/",
+            ".DS_Store",
+            "*.retry",
+            "*.pyc",
+            "pytestdebug.log",
+		],
+		"description": ".gitignore for playbook"
+    },
+	".gitignore for role": {
+		"prefix": "ignorerole",
+		"body": [
+            "molecule/roles/",
+            ".vscode/",
+            "__pycache__/",
+            ".DS_Store",
+            "*.retry",
+            "*.pyc",
+            "pytestdebug.log",
+		],
+		"description": ".gitignore for role"
+    },
+	"README for Ansible playbook": {
+		"prefix": "readmeplaybook",
+		"body": [
+            "ansible-playbook-${1:service-name-in-kebab}",
+            "======================",
+            "",
+            "${2:Install and config} ${3:service-name}}.",
+            "",
+            "Prerequisites",
+            "=============",
+            "",
+            "- `ansible-role-${4:dependent-role-name}`",
+            "",
+            "  ${5:Explain to users why role(s) above is needed. eg. Cloud Storage is the place to save our SSL certificates, and Nginx need them to serve.}",
+            "",
+		],
+		"description": "README for Ansible playbook"
+    },
+	"README for Ansible role": {
+		"prefix": "readmerole",
+		"body": [
+            "ansible-role-${1:install-config}-${2:small-service-name}",
+            "============================",
+            "",
+            "Install ${3:ServiceName}.",
+            "",
+            "Role Variables",
+            "--------------",
+            "",
+            "- ${4:role_var_name}",
+            "",
+            "    ${5:DescriptionForrole_var_name}.",
+            "",
+            "${6:... [AND SO ON]}",
+            "",
+            "",
+            "Available Tags",
+            "--------------",
+            "",
+            "- ${7:ansible_tag}",
+            "",
+            "${8:... [AND SO ON]}",
+            "",
+            "Dependencies",
+            "------------",
+            "",
+            "- ansible_role_common",
+            "",
+            "- ${9:ansible_role_name... [AND SO ON]}",
+            "",
+            "",
+            "Example Playbook",
+            "----------------",
+            "",
+            "```",
+            "- hosts: all",
+            "  roles:",
+            "    - role: ansible-role-${1:install-config}-${2:small-service-name}",
+            "```",
+            ""
+		],
+		"description": "README for Ansible role"
+    },
+	"Meta/main.yml template": {
+		"prefix": "metat",
+		"body": [
+            "    ---",
+            "",
+            "    galaxy_info:",
+            "      author: ${1:YourName}",
+            "      description: ${2:Install/Config/Define common variables for} ${3:ServiceName}",
+            "      company: Ciro Solution",
+            "    ",
+            "      license: Ciro Solution",
+            "    ",
+            "      min_ansible_version: ${4:2.7.10}",
+            "    ",
+            "      platforms:",
+            "      - name: CentOS",
+            "        versions:",
+            "        - 7",
+            "        ",
+            "      galaxy_tags: []",
+            "        - ${5:tag}",
+            "    ",
+            "    dependencies: []",
+            "        - ansible-role-common",
+            "        - ${6:dependency}",
+			""
+		],
+		"description": "Meta/main.yml template"
+	},
+	"Molecule.yml template": {
+		"prefix": "molt",
+		"body": [
+            "---",
+            "",
+			"dependency:",
+            "  name: gilt",
+            "driver:",
+            "  name: docker",
+            "lint:",
+            "  name: yamllint",
+            "platforms:",
+            "  - name: ${1:installOrconfig}-${2:service}-instance",
+            "    image: couchbase/centos7-systemd",
+            "    command: /usr/sbin/init",
+            "    privileged: true",
+            "provisioner:",
+            "  name: ansible",
+            "  env:",
+            "    ANSIBLE_ROLES_PATH: ../roles/",
+            "  lint:",
+            "    name: ansible-lint",
+            "verifier:",
+            "  name: testinfra",
+            "  lint:",
+            "    name: flake8",
+            ""
+		],
+		"description": "Molecule.yml template"
+	}
+}
